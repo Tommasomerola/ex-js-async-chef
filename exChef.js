@@ -21,7 +21,11 @@ Esempio di output atteso
 
 Data di nascita dello chef: 1990-06-15 */
 
-async function fetchJson(url) {
+
+/* EX SVOLTO CON L AIUTO DI fetchJson */
+
+
+/* async function fetchJson(url) {
     const response = await fetch(url);
     const obj = await response.json();
     return obj
@@ -37,14 +41,27 @@ const getChefBirthday = async(id) => {
 
     const user = await fetchJson(`https://dummyjson.com/users/${recipe.userId}`)
     return user.birthDate;
-}
+} */
+
+
+    
+    async function getChefBirthday(id) {
+       
+        
+        const recipeResponse = await fetch(`https://dummyjson.com/recipes/${id}`);
+        const recipe = await recipeResponse.json()
+        const chefResponse= await fetch(`https://dummyjson.com/users/${recipe.userId}`)
+        const chef = await chefResponse.json();
+        return chef.birthDate;
+    }
+
 
 (async() => {
     try{
         const birthday = await getChefBirthday(1)
         console.log(`data di nascita:`,birthday);
         }catch(error){
-            console.error(error); 
+            console.error(`Errore`, error.message); 
         }
 })();
 
